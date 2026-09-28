@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BasePes | Hub de Cartas de Futebol</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">⚽</span>
+                    <span class="logo-text">BasePes</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="players">
+                    <span class="nav-icon">🎯</span>
+                    <span>Jogadores</span>
+                </a>
+                <a href="#" class="nav-item" data-page="squad">
+                    <span class="nav-icon">👥</span>
+                    <span>Meu Elenco</span>
+                </a>
+                <a href="#" class="nav-item" data-page="market">
+                    <span class="nav-icon">💰</span>
+                    <span>Mercado</span>
+                </a>
+                <a href="#" class="nav-item" data-page="admin">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Admin</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1 id="pageTitle">Jogadores</h1>
+                    <p class="subtitle" id="pageSubtitle">Explore todos os jogadores disponíveis</p>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <span class="coins">💰 100,000</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Pages Container -->
+            <div class="pages-container">
+                <!-- Players Page -->
+                <div id="playersPage" class="page active">
+                    <section class="filters-section">
+                        <div class="filter-group">
+                            <input 
+                                type="text" 
+                                id="searchInput" 
+                                class="search-input" 
+                                placeholder="Buscar jogador..."
+                                aria-label="Buscar jogador"
+                            >
+                        </div>
+
+                        <div class="filters-row">
+                            <div class="filter-group">
+                                <label>Posição</label>
+                                <select id="positionFilter">
+                                    <option value="">Todas</option>
+                                    <option value="GK">Goleiro</option>
+                                    <option value="CB">Zagueiro</option>
+                                    <option value="LB">Lateral E</option>
+                                    <option value="RB">Lateral D</option>
+                                    <option value="CM">Meia</option>
+                                    <option value="CDM">Volante</option>
+                                    <option value="CAM">Meia Ofensivo</option>
+                                    <option value="LW">Ponta E</option>
+                                    <option value="RW">Ponta D</option>
+                                    <option value="ST">Atacante</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label>Nação</label>
+                                <select id="nationFilter">
+                                    <option value="">Todas</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label>Clube</label>
+                                <select id="clubFilter">
+                                    <option value="">Todos</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label>Raridade</label>
+                                <select id="rarityFilter">
+                                    <option value="">Todas</option>
+                                    <option value="Bronze">Bronze</option>
+                                    <option value="Silver">Silver</option>
+                                    <option value="Gold">Gold</option>
+                                    <option value="Legendary">Legendary</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label>Classificação Mín.</label>
+                                <input type="number" id="overallFilter" min="0" max="99" placeholder="0">
+                            </div>
+
+                            <button id="resetFilters" class="btn btn-secondary">Limpar</button>
+                        </div>
+                    </section>
+
+                    <section class="stats-section">
+                        <div class="stat-card">
+                            <span class="stat-label">Total</span>
+                            <span class="stat-value" id="totalPlayers">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">OVR Médio</span>
+                            <span class="stat-value" id="avgOverall">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Top Rareza</span>
+                            <span class="stat-value" id="topRarity">-</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Top Clube</span>
+                            <span class="stat-value" id="topClub">-</span>
+                        </div>
+                    </section>
+
+                    <section class="players-section">
+                        <div class="section-header">
+                            <h2>Lista de Jogadores</h2>
+                            <span class="result-count" id="resultCount">0 resultados</span>
+                        </div>
+                        <div id="playersGrid" class="players-grid"></div>
+                    </section>
+                </div>
+
+                <!-- Squad Page -->
+                <div id="squadPage" class="page">
+                    <section class="squad-section">
+                        <div class="squad-grid" id="squadGrid"></div>
+                        <div class="squad-summary">
+                            <h3>Resumo do Elenco</h3>
+                            <p id="squadInfo">Adicione jogadores ao seu elenco</p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Market Page -->
+                <div id="marketPage" class="page">
+                    <section class="market-section">
+                        <h2>Mercado (Em Breve)</h2>
+                        <p>Funcionalidade de mercado será implementada em breve.</p>
+                    </section>
+                </div>
+
+                <!-- Admin Page -->
+                <div id="adminPage" class="page">
+                    <section class="admin-section">
+                        <div class="admin-panel">
+                            <h2>Painel Administrativo</h2>
+                            
+                            <div class="admin-form">
+                                <h3>Adicionar Novo Jogador</h3>
+                                <div class="form-group">
+                                    <label>Nome</label>
+                                    <input type="text" id="adminName" placeholder="Nome do jogador">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Clube</label>
+                                        <input type="text" id="adminClub" placeholder="Clube">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nação</label>
+                                        <input type="text" id="adminNation" placeholder="Nação">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Posição</label>
+                                        <select id="adminPosition">
+                                            <option value="ST">ST</option>
+                                            <option value="LW">LW</option>
+                                            <option value="RW">RW</option>
+                                            <option value="CAM">CAM</option>
+                                            <option value="CM">CM</option>
+                                            <option value="CDM">CDM</option>
+                                            <option value="CB">CB</option>
+                                            <option value="LB">LB</option>
+                                            <option value="RB">RB</option>
+                                            <option value="GK">GK</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>OVR</label>
+                                        <input type="number" id="adminOverall" min="0" max="99" placeholder="75">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Raridade</label>
+                                        <select id="adminRarity">
+                                            <option value="Bronze">Bronze</option>
+                                            <option value="Silver">Silver</option>
+                                            <option value="Gold">Gold</option>
+                                            <option value="Legendary">Legendary</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Pace</label>
+                                        <input type="number" id="adminPace" min="0" max="99" placeholder="75">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Shooting</label>
+                                        <input type="number" id="adminShooting" min="0" max="99" placeholder="75">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Passing</label>
+                                        <input type="number" id="adminPassing" min="0" max="99" placeholder="75">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Dribbling</label>
+                                        <input type="number" id="adminDribbling" min="0" max="99" placeholder="75">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Defense</label>
+                                        <input type="number" id="adminDefense" min="0" max="99" placeholder="75">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Physical</label>
+                                        <input type="number" id="adminPhysical" min="0" max="99" placeholder="75">
+                                    </div>
+                                </div>
+                                <button id="addPlayerBtn" class="btn btn-primary">Adicionar Jogador</button>
+                            </div>
+
+                            <div class="admin-stats">
+                                <h3>Estatísticas do Banco</h3>
+                                <div class="admin-stat-row">
+                                    <p>Total de Jogadores: <strong id="adminTotal">0</strong></p>
+                                    <p>OVR Médio: <strong id="adminAvg">0</strong></p>
+                                    <p>Legendários: <strong id="adminLegendary">0</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Player Detail Modal -->
+    <div id="playerModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="player-detail">
+                <div class="player-header">
+                    <div class="player-avatar-large"></div>
+                    <div class="player-info-main">
+                        <h2 id="modalPlayerName"></h2>
+                        <p id="modalPlayerMeta"></p>
+                        <div class="player-rating" id="modalPlayerRating"></div>
+                    </div>
+                </div>
+                <div class="player-stats-detailed">
+                    <div class="stat-detail">
+                        <span>PAC</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="statPace"></div>
+                        </div>
+                        <span id="statPaceValue">0</span>
+                    </div>
+                    <div class="stat-detail">
+                        <span>SHO</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="statShooting"></div>
+                        </div>
+                        <span id="statShootingValue">0</span>
+                    </div>
+                    <div class="stat-detail">
+                        <span>PAS</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="statPassing"></div>
+                        </div>
+                        <span id="statPassingValue">0</span>
+                    </div>
+                    <div class="stat-detail">
+                        <span>DRI</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="statDribbling"></div>
+                        </div>
+                        <span id="statDribblingValue">0</span>
+                    </div>
+                    <div class="stat-detail">
+                        <span>DEF</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="statDefense"></div>
+                        </div>
+                        <span id="statDefenseValue">0</span>
+                    </div>
+                    <div class="stat-detail">
+                        <span>PHY</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="statPhysical"></div>
+                        </div>
+                        <span id="statPhysicalValue">0</span>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" id="addToSquadBtn">Adicionar ao Elenco</button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('playerModal').style.display='none'">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
